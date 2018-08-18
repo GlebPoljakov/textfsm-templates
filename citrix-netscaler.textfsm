@@ -1,0 +1,20 @@
+#
+# Parse Citrix NetScaler configuration for Server Configurations.
+#
+# Author: Gleb N. Polyakov (email: gleb.poljakov@gmail.com)
+# Date: 2018-08-18
+#
+Value ServerNameConfig (\S+)
+Value ServerAddress (\S+)
+Value ServerState (\S+)
+Value ServerComment (\S+)
+
+Start
+  ^add server -> ServersDefs
+
+ServersDefs
+  ^add server ${ServerNameConfig} ${ServerAddress} -> Continue
+  ^.*-state ${ServerState} -> Continue
+  ^.*-comment "${ServerComment}" -> Continue
+  ^.* -> Next.Record Start
+
