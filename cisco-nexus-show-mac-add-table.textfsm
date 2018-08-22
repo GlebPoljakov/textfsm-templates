@@ -1,0 +1,20 @@
+#
+# Parse CIsco Nexus "show mac address table"
+#
+# Author: Gleb N. Polyakov (email: gleb.poljakov@gmail.com)
+# Date: 2018-08-22
+#
+#
+Value MacAddress (\S+)
+Value MacAddressType (\S+)
+Value MacAge (\d+)
+Value Secure (\S+)
+Value NTFY (\S+)
+Value Ports (\S+)
+Value VlanId (\d+)
+Value EntryType (\*|G|R|O)
+
+Start
+  ^${EntryType}\s+${VlanId}\s+${MacAddress}\s+${MacAddressType}\s+${MacAge}\s+${Secure}\s+${NTFY}\s+${Ports} -> Next.Record
+
+
