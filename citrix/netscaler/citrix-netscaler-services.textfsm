@@ -1,0 +1,29 @@
+#
+# Parse Citrix NetScaler configuration for Server Configurations.
+#
+# Author: Gleb N. Polyakov (email: gleb.poljakov@gmail.com)
+# Date: 2018-08-18
+#
+Value ServiceName (\S+)
+Value ServiceComment (\S+)
+Value ServerName (\S+)
+Value ServiceType (\S+)
+Value ServicePort (\S+)
+Value GSLB (\S+)
+Value MaxClients (\S+)
+Value MaxRequests (\S+)
+Value CIP (DISABLED|ENABLED \S+)
+Value USIP (\S+)
+Value UseProxyPort (\S+)
+Value SP (\S+)
+Value cltTimeout (\S+)
+Value svrTimeout (\S+)
+Value ClientKeepalive_CKA (\S+)
+Value TcpBuffering_TCPB (\S+)
+Value HttpCompression_CMP (\S+)
+Value CustomServerID (\S+)
+Value NotParsed (.*)
+
+Start
+  ^add service ${ServiceName} ${ServerName} ${ServiceType} ${ServicePort}( -gslb ${GSLB}| -maxClient ${MaxClients}| -maxReq ${MaxRequests}| -cip ${CIP}| -usip ${USIP}| -useproxyport ${UseProxyPort}| -sp ${SP}| -cltTimeout ${cltTimeout}| -svrTimeout ${svrTimeout}| -CKA ${ClientKeepalive_CKA}| -TCPB ${TcpBuffering_TCPB}| -CMP ${HttpCompression_CMP}| -CustomServerID ${CustomServerID}| -comment ${ServiceComment}|${NotParsed}*)* -> Next.Record
+

@@ -10,9 +10,9 @@ Value MacAddressType (\S+)
 Value MacAge (\d+)
 Value Secure (\S+)
 Value NTFY (\S+)
-Value Ports (\S+)
+Value List Ports (\S+)
 Value VlanId (\d+)
-Value EntryType (\*|G|R|O)
+Value EntryType (\*|G|R|O| )
 
 Start
   ^${EntryType}\s+${VlanId}\s+${MacAddress}\s+${MacAddressType}\s+${MacAge}\s+${Secure}\s+${NTFY}\s+${Ports} -> Next.Record

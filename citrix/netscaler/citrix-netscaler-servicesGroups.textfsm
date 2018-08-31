@@ -1,0 +1,45 @@
+#
+# Parse Citrix NetScaler configuration for Server Configurations.
+#
+# Author: Gleb N. Polyakov (email: gleb.poljakov@gmail.com)
+# Date: 2018-08-18
+#
+# Command definition: https://docs.citrix.com/ja-jp/netscaler/11/reference/netscaler-command-reference/basic/servicegroup.html
+#
+Value ServiceGroupName (\S+)
+Value ServiceType (\S+)
+Value CacheType (\S+)		
+Value TrafficDomain (\d+)	
+Value MaxRequests (\d+)
+Value MaxClient (\d+)
+Value Cacheable (YES|NO)
+Value CIP (DISABLED|ENABLED \S+)
+Value USIP (\S+)
+Value PathMonitor (YES|NO)
+Value PathMonitorIndv (YES|NO)
+Value UseProxyPort (YES|NO)
+Value HealthMonitor (YES|NO)
+Value SureConnect (ON|OFF)
+Value SurgeProtect (ON|OFF)
+Value RtspSessionidRemap (ON|OFF)
+Value CltTimeout (\d+)
+Value SvrTimeout (\d+)
+Value ClientKeepAlive (YES|NO)
+Value TcpBuffering (YES|NO)
+Value Compression (YES|NO)
+Value MaxBandwidth (\d+)
+Value MonThreshold (\d+)
+Value State (ENABLED|DISABLED)
+Value DownStateFlush (ENABLED|DISABLED)
+Value TcpProfileName (\S+)
+Value HttpProfileName (\S+)
+Value Comment (\S+)
+Value AppFlowLog (ENABLED|DISABLED)
+Value NetProfile (\S+)
+Value AutoScale (DNS|POLICY|DISABLED)
+Value MemberPort (\S+)
+Value MonConnectionClose (RESET|FIN)
+Value NotParsed (.*)
+
+Start
+  ^add serviceGroup ${ServiceGroupName} ${ServiceType}( -cacheType ${CacheType}| -td ${TrafficDomain}| -maxClient ${MaxClient}| -maxReq ${MaxRequests}| -cacheable ${Cacheable}| -cip ${CIP}| -usip ${USIP}| -pathMonitor ${PathMonitor}| -pathMonitorIndv ${PathMonitorIndv}| -useproxyport ${UseProxyPort}| -healthMonitor ${HealthMonitor}| -sc ${SureConnect}| -sp ${SurgeProtect}| -rtspSessionidRemap ${RtspSessionidRemap}| -cltTimeout ${CltTimeout}| -svrTimeout ${SvrTimeout}| -CKA ${ClientKeepAlive}| -TCPB ${TcpBuffering}| -CMP ${Compression}| -maxBandwidth ${MaxBandwidth}| -monThreshold ${MonThreshold}| -state ${State}| -downStateFlush ${DownStateFlush}| -tcpProfileName ${TcpProfileName}| -httpProfileName ${HttpProfileName}| -comment ${Comment}| -appflowLog ${AppFlowLog}| -netProfile ${NetProfile}| -autoScale ${AutoScale}| -memberPort ${MemberPort}|${NotParsed}*)*  -> Next.Record
